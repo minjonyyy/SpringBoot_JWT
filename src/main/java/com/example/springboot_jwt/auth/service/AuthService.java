@@ -32,7 +32,7 @@ public class AuthService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(encodedPassword)
-                .role(UserRole.USER) // default Role : USER
+                .role(UserRole.ROLE_USER) // default Role : USER
                 .build();
 
         repository.save(user);
