@@ -2,6 +2,7 @@ package com.example.springboot_jwt.auth.controller;
 
 import com.example.springboot_jwt.auth.dto.request.LogInRequest;
 import com.example.springboot_jwt.auth.dto.request.SignUpRequest;
+import com.example.springboot_jwt.auth.dto.response.TokenResponse;
 import com.example.springboot_jwt.auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> logIn(@Valid @RequestBody LogInRequest request) {
-        authService.logIn(request);
-        return ResponseEntity.ok("로그인 성공");
+    public ResponseEntity<TokenResponse> logIn(@Valid @RequestBody LogInRequest request) {
+        TokenResponse accessToken = authService.logIn(request);
+        return ResponseEntity.ok(accessToken);
     }
 }
