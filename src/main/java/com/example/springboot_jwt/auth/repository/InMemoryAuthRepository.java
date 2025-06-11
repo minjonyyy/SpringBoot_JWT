@@ -3,15 +3,15 @@ package com.example.springboot_jwt.auth.repository;
 import com.example.springboot_jwt.auth.entity.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class InMemoryAuthRepository {
 
-    private final Map<String, User> storage = new HashMap<>();
+    private final Map<String, User> storage = new ConcurrentHashMap<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     public void save(User user) {
