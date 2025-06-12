@@ -2,7 +2,8 @@ package com.example.springboot_jwt.auth.authentication.filter;
 
 import com.example.springboot_jwt.auth.authentication.jwt.JwtAuthenticationToken;
 import com.example.springboot_jwt.auth.authentication.jwt.JwtTokenProvider;
-import com.example.springboot_jwt.auth.entity.AuthUser;
+import com.example.springboot_jwt.auth.authentication.principal.AuthUser;
+import com.example.springboot_jwt.auth.entity.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.example.springboot_jwt.auth.authentication.jwt.JwtTokenProvider.*;
 
@@ -65,11 +67,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void setAuthentication(Claims claims) {
         Long userId = Long.valueOf(claims.getSubject());
         String email = claims.get("email", String.class);
-        String userRole = claims.get("userRole", String.class);
+
+        List<String> rolesByString = claims.get("roles", List.class);
+        List<UserRole> userRoles = rolesByString.stream().map(UserRole::of).toList();
+
         AuthUser authUser = AuthUser.builder()
                 .id(userId)
                 .email(email)
-                .userRole(userRole)
+                .userRoles(userRoles)
                 .build();
         JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(authUser);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);

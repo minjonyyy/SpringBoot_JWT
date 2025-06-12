@@ -1,5 +1,6 @@
 package com.example.springboot_jwt.auth.authentication.jwt;
 
+import com.example.springboot_jwt.auth.entity.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -10,6 +11,8 @@ import org.springframework.util.StringUtils;
 import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider {
@@ -25,13 +28,13 @@ public class JwtTokenProvider {
         this.jwtProperties = jwtProperties;
     }
 
-    public String createAccessToken(Long userId, String email, String role) {
+    public String createAccessToken(Long userId, String email, Set<UserRole> roles) {
         Date date = new Date();
         return BEARER_PREFIX +
                 Jwts.builder()
                         .subject(String.valueOf(userId))
                         .claim("email", email)
-                        .claim("userRole", role)
+                        .claim("roles", roles.stream().map(UserRole::getAuthority).collect(Collectors.toList()))
                         .expiration(createExpiration(jwtProperties.getAccessTokenExpiration()))
                         .issuedAt(date)
                         .signWith(this.signingKey)

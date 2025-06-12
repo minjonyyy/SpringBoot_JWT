@@ -1,16 +1,20 @@
 package com.example.springboot_jwt.auth.authentication.jwt;
 
-import com.example.springboot_jwt.auth.entity.AuthUser;
+import com.example.springboot_jwt.auth.authentication.principal.AuthUser;
+import com.example.springboot_jwt.auth.entity.UserRole;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     private final AuthUser authUser;
 
     public JwtAuthenticationToken(AuthUser authUser) {
-        super(Collections.singleton(new SimpleGrantedAuthority(authUser.getUserRole())));
+        super(authUser.getUserRoles().stream()
+                .map(UserRole::getAuthority)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList()));
         this.authUser = authUser;
         setAuthenticated(true);
     }

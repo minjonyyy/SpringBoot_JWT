@@ -13,13 +13,13 @@ import java.util.Set;
 @Schema(description = "Admin 권한 부여 성공 응답")
 @RequiredArgsConstructor
 @Builder
-public class SignUpResponse {
+public class UserRoleResponse {
 
     private final String username;
     private final Set<UserRole> roles;
 
-    public static SignUpResponse toDto(User user) {
-        return SignUpResponse.builder()
+    public static UserRoleResponse toDto(User user) {
+        return UserRoleResponse.builder()
                 .username(user.getUsername())
                 .roles(user.getRoles())
                 .build();

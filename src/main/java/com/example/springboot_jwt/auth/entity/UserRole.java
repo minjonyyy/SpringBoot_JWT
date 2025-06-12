@@ -2,12 +2,13 @@ package com.example.springboot_jwt.auth.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Arrays;
 
 @Getter
 @RequiredArgsConstructor
-public enum UserRole {
+public enum UserRole implements GrantedAuthority {
     ROLE_USER(Authority.USER, "user"),
     ROLE_ADMIN(Authority.ADMIN, "admin"),
     ;
@@ -22,16 +23,14 @@ public enum UserRole {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user role: " + role));
     }
 
-    public static UserRole fromState(String state) {
-        return Arrays.stream(values())
-                .filter(r -> r.stateValue.equalsIgnoreCase(state))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user state: " + state));
-    }
-
     public static class Authority {
         public static final String USER = "ROLE_USER";
         public static final String ADMIN = "ROLE_ADMIN";
+    }
+
+    @Override
+    public String getAuthority() {
+        return name();
     }
 
 }
