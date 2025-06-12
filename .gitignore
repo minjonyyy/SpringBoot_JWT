@@ -38,3 +38,9 @@ out/
 
 ### properties ###
 *.properties
+
+# gradle-wrapper만 허용하도록 예외 처리
+!gradle/wrapper/gradle-wrapper.properties
+!gradle/wrapper/gradle-wrapper.jar
+!gradlew
+!gradlew.bat
