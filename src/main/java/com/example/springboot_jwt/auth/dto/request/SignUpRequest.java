@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Schema(description = "사용자 회원가입 요청")
+@Builder
 public class SignUpRequest {
 
     @NotBlank(message = "사용자명은 필수 입력 항목입니다.")
