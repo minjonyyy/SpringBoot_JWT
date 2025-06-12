@@ -1,5 +1,7 @@
 package com.example.springboot_jwt.auth.entity;
 
+import com.example.springboot_jwt.auth.exception.UserErrorCode;
+import com.example.springboot_jwt.common.exception.CustomException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +22,7 @@ public enum UserRole implements GrantedAuthority {
         return Arrays.stream(UserRole.values())
                 .filter(r -> r.name().equalsIgnoreCase(role))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user role: " + role));
+                .orElseThrow(() -> new CustomException(UserErrorCode.INVALID_USER_ROLE));
     }
 
     public static class Authority {

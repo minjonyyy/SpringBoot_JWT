@@ -4,6 +4,8 @@ import com.example.springboot_jwt.auth.authentication.jwt.JwtAuthenticationToken
 import com.example.springboot_jwt.auth.authentication.jwt.JwtTokenProvider;
 import com.example.springboot_jwt.auth.authentication.principal.AuthUser;
 import com.example.springboot_jwt.auth.entity.UserRole;
+import com.example.springboot_jwt.auth.exception.AuthErrorCode;
+import com.example.springboot_jwt.common.exception.CustomException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -44,17 +46,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     setAuthentication(claims);
                 }
             } catch (SecurityException | MalformedJwtException e) {
-                log.error("유효하지 않은 JWT 서명입니다.", e);
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT signature");
-                return;
+                log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.", e);
+                throw new CustomException(AuthErrorCode.INVALID_JWT_SIGNATURE);
+
             } catch (ExpiredJwtException e) {
-                log.error("만료된 JWT 토큰입니다.", e);
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expired");
-                return;
+                log.error("Expired JWT token, 만료된 JWT token 입니다.", e);
+                throw new CustomException(AuthErrorCode.TOKEN_EXPIRED);
             } catch (UnsupportedJwtException e) {
-                log.error("지원되지 않는 JWT 토큰입니다.", e);
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unsupported JWT token");
-                return;
+                log.error("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.", e);
+                throw new CustomException(AuthErrorCode.UNSUPPORTED_TOKEN);
             } catch (Exception e) {
                 log.error("Internal server error", e);
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

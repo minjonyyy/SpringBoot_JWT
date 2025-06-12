@@ -1,6 +1,8 @@
 package com.example.springboot_jwt.auth.authentication.jwt;
 
 import com.example.springboot_jwt.auth.entity.UserRole;
+import com.example.springboot_jwt.auth.exception.AuthErrorCode;
+import com.example.springboot_jwt.common.exception.CustomException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -69,7 +71,7 @@ public class JwtTokenProvider {
         if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
             return tokenValue.substring(BEARER_PREFIX.length());
         }
-        throw new IllegalArgumentException("Invalid JWT");
+        throw new CustomException(AuthErrorCode.TOKEN_NOT_FOUND);
     }
 
 }
