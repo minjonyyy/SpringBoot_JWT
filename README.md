@@ -49,8 +49,8 @@ java -jar build/libs/SpringBoot_JWT-0.0.1-SNAPSHOT.jar
 ## 📮 제출 정보
 
 - 🔗 **GitHub Repository 링크**: [https://github.com/minjonyyy/SpringBoot_JWT](https://github.com/minjonyyy/SpringBoot_JWT)
-- 🔗 **Swagger UI 주소**: [http://3.36.123.8:8080/swagger-ui/index.html](http://3.36.123.8:8080/swagger-ui/index.html)
-- 🔗 **API 엔드포인트 URL (Base URL)**: [http://3.36.123.8:8080](http://3.36.123.8:8080)
+- 🔗 **Swagger UI 주소**: [http://13.124.60.255:8080/swagger-ui/index.html](http://13.124.60.255:8080/swagger-ui/index.html)
+- 🔗 **API 엔드포인트 URL (Base URL)**: [http://13.124.60.255:8080](http://3.36.123.8:8080)
 
 ---
 
